@@ -1,6 +1,7 @@
 #include<iostream>
 #include<stack>
 using namespace std;
+typedef long long ll;
 //包含最小值的栈
 class MinStack
 {
