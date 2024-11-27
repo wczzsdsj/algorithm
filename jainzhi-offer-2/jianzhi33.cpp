@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<functional>
+#include<stack>
 using namespace std;
 
 //判断是否是二叉搜索树的后序遍历
@@ -25,5 +26,26 @@ public:
         };
        
         return dfs(0,postorder.size()-1);
+    }
+};
+//单调栈
+class Solution
+{
+public:
+    bool verifyTreeOrder(vector<int> &postorder)
+    {
+        int root = INT_MAX;
+        stack<int> s;
+        reverse(postorder.begin(),postorder.end());
+        for(int val:postorder){
+            if(val>root)
+                return false;
+            while(!s.empty()&&s.top()>val){
+                root = s.top();
+                s.pop();
+            }
+            s.push(val);
+        }
+        return true;
     }
 };
