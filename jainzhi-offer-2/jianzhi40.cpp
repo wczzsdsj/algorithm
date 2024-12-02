@@ -46,6 +46,7 @@ class Solution
 public:
     vector<int> inventoryManagement(vector<int> &stock, int cnt)
     {
+        // priority_queue<int, vector<int>, less<int>> q_less;
         priority_queue<int> q;
         vector<int> ans;
         for (int i = 0; i < stock.size();i++)
