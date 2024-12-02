@@ -2,6 +2,7 @@
 #include<vector>
 using namespace std;
 // 数组中出现次数超过一半的数字
+// 摩尔投票法
 class Solution
 {
 public:
