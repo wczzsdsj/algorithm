@@ -58,7 +58,15 @@ public:
         {
             if(ans[pos]!=0) break;
         }
-
+        cout << ans;
         return ans.substr(pos);
     }
 };
+
+int main(){
+    string a = "123", b = "120";
+    Solution *obj = new Solution();
+    obj->subStrings(a,b);
+
+    return 0;
+}
