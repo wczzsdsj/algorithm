@@ -4,9 +4,11 @@
 #include<vector>
 #include <thread> //C++11 线程库使用类（如 std::thread）,<thread> 库是 C++ 标准库的一部分
 #include<chrono>
+#include<mutex>
 using namespace std;
-//单生产者 单消费者
+//多生产者 多消费者
 const int NUM = 8;
+const int threadNum = 5;
 
 void P(sem_t &s){
     sem_wait(&s);
@@ -20,48 +22,59 @@ vector<int> nums(NUM,0);
 
 int p_index = 0;
 int c_index = 0;
+int value=0;
 sem_t blank_sem;
 sem_t data_sem;
 
-void produce(int value){
+// 多生产者 多消费者需要对index加锁实现生产者之间的互斥，消费者之间的互斥
+mutex p_lock;
+mutex c_lock;
+
+void produce(int threadid){
     P(blank_sem);
+    p_lock.lock();
     nums[p_index] = value;
-    printf("在%d的位置创建%d\n",p_index,value);
+    printf("生产者%d在%d的位置创建%d\n",threadid,p_index,value);
+    value++;
+    p_index = (p_index+1) % NUM;
+    p_lock.unlock();
     V(data_sem);
-    p_index++;
-    p_index %= NUM;
 }
 
-void consume(int &value){
+void consume(int threadid){
     P(data_sem);
-    value = nums[c_index];
-    printf("在%d的位置消耗%d\n",c_index,value);
+    c_lock.lock();
+    int ret = nums[c_index];
+    printf("消费者%d在%d的位置消耗%d\n", threadid,c_index, ret);
+    c_index = (c_index+1) % NUM;
+    c_lock.unlock();
     V(blank_sem);
-    c_index++;
-    c_index %= NUM;
 }
 
-
-void producer(int num){
+void producer(int threadid){
     for (int i = 0; ;i++)
-        produce(i);
+        produce(threadid);
 }
-void consumer(int num)
+void consumer(int threadid)
 {
-    int value;
     for (int i = 0; ;i++)
-        consume(value);
+        consume(threadid);
 }
 
 int main(){
     sem_init(&blank_sem,0,NUM);
     sem_init(&data_sem,0,0);
 
-    thread produceThead(producer, 10);
-    thread consumeThread(consumer,10);
-
-    consumeThread.join();
-    produceThead.join();
+    vector<thread> consumerThread;
+    vector<thread> producerThread;
+    for (int i = 0; i < threadNum;i++){
+        consumerThread.emplace_back(thread(consumer,i));
+        producerThread.emplace_back(thread(producer,i));
+    }
+    for (int i = 0; i < threadNum;i++){
+        producerThread[i].join();
+        consumerThread[i].join();
+    }
 
     sem_destroy(&blank_sem);
     sem_destroy(&data_sem);
