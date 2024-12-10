@@ -36,4 +36,23 @@ public:
         }
         return dp[0];
     }
+    //空间优化
+    int crackNumber(int ciphertext)
+    {
+        string nums = to_string(ciphertext);
+        int size = nums.size();
+        if (size == 0)
+            return 0;
+        int a = 1, b = 1;
+        for (int i = 1; i < size;i++)
+        {
+            int c = b;
+            if(nums[i-1]=='1'||(nums[i-1]=='2'&&nums[i]<'6')){
+                c += a;
+            }
+            a = b;
+            b = c;
+        }
+        return b;
+    }
 };
