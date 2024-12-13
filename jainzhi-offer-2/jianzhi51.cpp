@@ -2,7 +2,7 @@
 #include<iostream>
 #include<functional>
 using namespace std;
-
+// 数组中的逆序对
 class Solution {
   public:
     int reversePairs(vector<int> &record) {
