@@ -10,6 +10,7 @@ class Solution {
     vector<int> twoSum(vector<int> &nums, int target) {
         unordered_map<int, int> mp;
         for (int i = 0; i < nums.size(); i++) {
+            // 注意find返回值判断方式
             if (mp.find(target - nums[i]) != mp.end()) {
                 return {mp[target - nums[i]], i};
             }
