@@ -2,6 +2,7 @@
 using namespace std;
 
 // 41. 缺失的第一个正数
+// 原地哈希，可以参考 剑指 Offer 03. 数组中重复的数字
 class Solution {
   public:
     int firstMissingPositive(vector<int> &nums) {
