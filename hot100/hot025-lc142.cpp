@@ -18,7 +18,6 @@ class Solution {
             fast = fast->next->next;
             slow = slow->next;
             if (fast == slow) {
-                cout << '1' << endl;
                 ListNode *res = head;
                 while (res != slow) {
                     res = res->next;
