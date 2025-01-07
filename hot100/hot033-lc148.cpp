@@ -15,12 +15,14 @@ class Solution {
     ListNode *sortList(ListNode *head) {
         if (head == nullptr || head->next == nullptr)
             return head;
+        //fast初始化为next，当为偶数时，slow在中间值偏左。此题初始化为head，会导致最后两个节点时不断开一直在循环
         ListNode *fast = head->next, *slow = head;
         while (fast && fast->next) {
             slow = slow->next;
             fast = fast->next->next;
         }
         ListNode *newhead = slow->next;
+        // 注意这里的含义，断开。两个节点时需要中间值偏左
         slow->next = nullptr;
         ListNode *l1 = sortList(head);
         ListNode *l2 = sortList(newhead);
