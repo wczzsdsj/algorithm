@@ -13,27 +13,19 @@ struct ListNode {
 class Solution {
   public:
     ListNode *sortList(ListNode *head) {
-        if (head == nullptr)
+        if (head == nullptr || head->next == nullptr)
             return head;
-        return sortListCore(head, nullptr);
-    }
-    ListNode *sortListCore(ListNode *head, ListNode *tail) {
-        if (head == nullptr)
-            return head;
-        if (head->next == tail) {
-            head->next = nullptr;
-            return head;
-        }
-        ListNode *fast = head, *slow = head;
-        while (fast != tail) {
+        ListNode *fast = head->next, *slow = head;
+        while (fast && fast->next) {
             slow = slow->next;
-            fast = fast->next;
-            if (fast != tail)
-                fast = fast->next;
+            fast = fast->next->next;
         }
-        ListNode *mid = slow;
+        ListNode *newhead = slow->next;
+        slow->next = nullptr;
+        ListNode *l1 = sortList(head);
+        ListNode *l2 = sortList(newhead);
 
-        return merge(sortListCore(head, mid), sortListCore(mid, tail));
+        return merge(l1, l2);
     }
     ListNode *merge(ListNode *l1, ListNode *l2) {
         ListNode *dummy = new ListNode(-1);
