@@ -20,9 +20,9 @@ class Solution {
         if (root == nullptr)
             return;
         sum = sum + root->val;
-        // 注意不要直接 += cnt[s-targetSum]，如果 s-targetSum 不在cnt 中，这会插入 s-targetSum
-        if (
-            mp.count(sum - targetSum) != 0) {
+        // 注意不要直接 += cnt[s-targetSum]，如果 s-targetSum 不在cnt
+        // 中，这会插入 s-targetSum 在 C++ 中，使用 std::map时，访问一个不存在的键会插入该键，并将其值初始化为类型的默认值（例如 0 对于整型）
+        if (mp.count(sum - targetSum) != 0) {
             cnt += mp[sum - targetSum];
         }
         mp[sum]++;
