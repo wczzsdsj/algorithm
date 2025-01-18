@@ -2,6 +2,8 @@
 using namespace std;
 
 // 84. 柱状图中最大的矩形
+// 递减栈：可以记录左右两边第一个比它大的
+// 递增栈：可以记录左右两边第一个比它小的
 class Solution {
   public:
     int largestRectangleArea(vector<int> &heights) {
