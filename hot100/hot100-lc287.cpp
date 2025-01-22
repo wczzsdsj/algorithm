@@ -5,19 +5,19 @@ using namespace std;
 // 每个位置 i 连一条 i→nums[i] 的边由于存在的重复的数字 target，因此 target
 // 这个位置一定有起码两条指向它的边，因此整张图一定存在环，且我们要找到的 target
 // 就是这个环的入口，那么整个问题就等价于 142. 环形链表 II。
-class
-      Solution {
+class Solution {
   public:
-    int findDuplicate(vector<int>& nums) {
-        int fast=nums[nums[fast]],slow=nums[slow];;
-        while(fast!=slow){
-            fast=nums[nums[fast]];
-            slow=nums[slow];
+    int findDuplicate(vector<int> &nums) {
+        int fast = nums[nums[fast]], slow = nums[slow];
+        ;
+        while (fast != slow) {
+            fast = nums[nums[fast]];
+            slow = nums[slow];
         }
-        fast=0;
-        while(fast!=slow){
-            fast=nums[fast];
-            slow=nums[slow];
+        fast = 0;
+        while (fast != slow) {
+            fast = nums[fast];
+            slow = nums[slow];
         }
         return slow;
     }
