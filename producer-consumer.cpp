@@ -80,3 +80,33 @@ int main(){
     sem_destroy(&data_sem);
     return 0;
 }
+
+// 小林coding 精简版
+// #define N 100
+// semaphore mutex = 1;        // 互斥信号量，用于保护缓冲区的互斥访问
+// semaphore emptyBuffers = N; // 表示空的缓冲区的数量
+// semaphore fullBuffers = 0;  // 表示满的缓冲区的数量
+// void producer() {
+//     while (TRUE) {
+//         P(emptyBuffers); // 等待空缓冲区
+//         P(mutex);        // 进入临界区
+
+//         // 生产一个产品并放入缓冲区
+//         // ...
+
+//         V(mutex);       // 离开临界区
+//         V(fullBuffers); // 增加满缓冲区的数量
+//     }
+// }
+// void consumer() {
+//     while (TRUE) {
+//         P(fullBuffers); // 等待满缓冲区
+//         P(mutex);       // 进入临界区
+
+//         // 从缓冲区中取出一个产品
+//         // ...
+
+//         V(mutex);        // 离开临界区
+//         V(emptyBuffers); // 增加空缓冲区的数量
+//     }
+// }
