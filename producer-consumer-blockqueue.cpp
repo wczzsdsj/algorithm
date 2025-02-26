@@ -7,6 +7,7 @@
 #include <chrono>
 using namespace std;
 
+// 基于阻塞队列的生产者消费者模型
 const int BUFFER_SIZE = 10;
 const int num_producers = 3;
 const int num_consumers = 2;
@@ -73,6 +74,7 @@ int main(){
     // 创建生产者线程
     for (int i = 0; i < num_producers; ++i)
     {
+        // 不仅仅是在使用bind时，在使用thread进行编程时，也会发生这样的问题，thread的方法传递引用的时候，必须外层用ref来进行引用传递，否则会编译出错。
         producers.emplace_back(thread(producer,ref(bq), i));//需要加ref实现引用传递
     }
 
