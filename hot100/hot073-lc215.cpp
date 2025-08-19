@@ -2,6 +2,35 @@
 using namespace std;
 
 // 215. 数组中的第K个最大元素
+
+// 快速排序
+class Solution {
+  public:
+    int quicksort(vector<int>&nums,int l,int r,int target){
+        int mid = l + (r-l) / 2;
+        swap(nums[mid],nums[r]);
+        int j = l;
+        for (int i = l; i <= r;i++) {
+            if(nums[i]<nums[r]){
+                swap(nums[j],nums[i]);
+                j++;
+            }
+        }
+        swap(nums[j],nums[r]);
+        if(target==j)
+            return nums[j];
+        else if(target<j){
+            return quicksort(nums,l,j-1,target);
+        }else
+            return quicksort(nums,j+1,r,target);
+    }
+
+    int findKthLargest(vector<int> &nums, int k) {
+        int target=nums.size()-k;
+        return quicksort(nums, 0, nums.size() - 1, target);
+    }
+};
+
 // 小顶堆 nlogk, greater是小顶堆
 class Solution {
   public:
