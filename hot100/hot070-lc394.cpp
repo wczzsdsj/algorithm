@@ -44,4 +44,36 @@ class Solution {
     }
 };
 
-// 或者双栈法，类比逆波兰式求解
+// 或者双栈法，类比逆波兰式求解,看这里
+class Solution {
+  public:
+    string decodeString(string s) {
+        stack<string> strs;
+        stack<int> nums;
+        int n = s.size();
+        int num = 0;
+        string res;
+        for (int i = 0; i < n; i++) {
+            if (s[i] >= '0' && s[i] <= '9') {
+                num = num * 10 + s[i] - '0';
+            } else if (s[i] >= 'a' && s[i] <= 'z') {
+                res += s[i];
+            } else if (s[i] == '[') {
+                strs.push(res);
+                res.clear();
+                nums.push(num);
+                num = 0;
+            } else {
+                int times = nums.top();
+                nums.pop();
+                for (int i = 0; i < times; i++) {
+                    strs.top() += res;
+                }
+                res = strs.top();
+                strs.pop();
+            }
+        }
+
+        return res;
+    }
+};
